@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-""" Markdown to HTML
+""" Script that converts Markdown to HTML
     Args:
-        First:name of the Markdown file.
-        Second:output file name.
+        First: name of the Markdown file.
+        Second: output file name.
 """
 
 import sys
@@ -15,25 +15,25 @@ def markdownToHtml():
               file=sys.stderr)
         exit(1)
 
-    mark_down = sys.argv[1]
-    html = sys.argv[2]
+    md_file = sys.argv[1]
+    html_file = sys.argv[2]
 
-    if not(os.path.isfile("./{}".format(mark_down))):
-        print("Missing {}".format(mark_down), file=sys.stderr)
+    if not(os.path.isfile("./{}".format(md_file))):
+        print("Missing {}".format(md_file), file=sys.stderr)
         exit(1)
 
-    head_mark = ["###### ", "##### ", "#### ", "### ", "## ", "# "]
-    head_html = ["<h6>", "<h5>", "<h4>", "<h3>", "<h2>", "<h1>"]
+    headings_md = ["###### ", "##### ", "#### ", "### ", "## ", "# "]
+    headings_html = ["<h6>", "<h5>", "<h4>", "<h3>", "<h2>", "<h1>"]
 
-    with open(mark_down, "r") as f_in:
-        with open(html, "w") as f_out:
+    with open(md_file, "r") as f_in:
+        with open(html_file, "w") as f_out:
             for line in f_in.read().split("\n"):
-                for i in range(0, len(head_mark)):
-                    if head_mark[i] in line:
-                        line_skip = line.replace(
-                            head_mark[i], head_html[i])
-                        line_skip += head_html[i].replace("<", "</") + "\n"
-                        f_out.write(line_skip)
+                for i in range(0, len(headings_md)):
+                    if headings_md[i] in line:
+                        new_line = line.replace(
+                            headings_md[i], headings_html[i])
+                        new_line += headings_html[i].replace("<", "</") + "\n"
+                        f_out.write(new_line)
                         break
 
     exit(0)
